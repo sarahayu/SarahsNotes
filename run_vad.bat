@@ -1,0 +1,1 @@
+wsl -- run_vad.sh

@@ -1,0 +1,82 @@
+                                    noisy       clean
+chat_full                           90.13       89.73
+chat_fan_2                          89.35       88.75
+chat_fan_4                          83.53       68.81
+chat_party_quiet                    90.15       87.8
+chat_pop_quiet                      92.52       90.01
+chat_fan_4_party_quiet_pop_quiet    87.21       81.36
+
+original
+okay wait how am i going to get home ride after you want a ride also you leaving at five thirty yeah probably we'll see though okay sounds good thank you if he comes we'll bike okay he says maybe he'd go if you picked us up is there space i might be able to bus there four fifteen you said he's not coming yeah i can go wait i can just walk it's close yeah i'm dumb and directionally challenged if he's picking up a ton of people i can walk i think he's on the way if he's even picking up anyone he's not getting kidnapped i have four seats and if he's not going i have two seats maybe three taken if he were going it would be a full car i'll bike someone else is coming
+
+chat_full
+chat_fan_2
+chat_fan_4
+chat_party_quiet
+chat_pop_quiet
+chat_fan_4_party_quiet_pop_quiet
+
+
+ffmpeg -filter_complex "amovie=chat_full.wav [a0]; amovie=fan_2.wav [a1]; [a0][a1] amix=inputs=2:duration=shortest [aout]" -map [aout] chat_fan_2.wav \
+&& ffmpeg -filter_complex "amovie=chat_full.wav [a0]; amovie=fan_4.wav [a1]; [a0][a1] amix=inputs=2:duration=shortest [aout]" -map [aout] chat_fan_4.wav \
+&& ffmpeg -filter_complex "amovie=chat_full.wav [a0]; amovie=party_quiet.wav [a1]; [a0][a1] amix=inputs=2:duration=shortest [aout]" -map [aout] chat_party_quiet.wav \
+&& ffmpeg -filter_complex "amovie=chat_full.wav [a0]; amovie=pop_quiet.wav [a1]; [a0][a1] amix=inputs=2:duration=shortest [aout]" -map [aout] chat_pop_quiet.wav \
+&& ffmpeg -filter_complex "amovie=chat_full.wav [a0]; amovie=chat_fan_4.wav [a1]; amovie=party_quiet.wav [a2]; amovie=pop_quiet.wav [a3]; [a0][a1][a2][a3] amix=inputs=4:duration=shortest [aout]" -map [aout] chat_fan_4_party_quiet_pop_quiet.wav
+
+echo chat_full >> chat_stt.txt \
+&& echo "" >> chat_stt.txt \
+&& stt --model /mnt/d/sarah/coqui-stt-0.9.3-models.pbmm --scorer /mnt/d/sarah/coqui-stt-0.9.3-models.scorer --audio chat_full.wav >> chat_stt.txt \
+&& echo "" >> chat_stt.txt \
+&& echo chat_fan_2 >> chat_stt.txt \
+&& echo "" >> chat_stt.txt \
+&& stt --model /mnt/d/sarah/coqui-stt-0.9.3-models.pbmm --scorer /mnt/d/sarah/coqui-stt-0.9.3-models.scorer --audio chat_fan_2.wav >> chat_stt.txt \
+&& echo "" >> chat_stt.txt \
+&& echo chat_fan_4 >> chat_stt.txt \
+&& echo "" >> chat_stt.txt \
+&& stt --model /mnt/d/sarah/coqui-stt-0.9.3-models.pbmm --scorer /mnt/d/sarah/coqui-stt-0.9.3-models.scorer --audio chat_fan_4.wav >> chat_stt.txt \
+&& echo "" >> chat_stt.txt \
+&& echo chat_party_quiet >> chat_stt.txt \
+&& echo "" >> chat_stt.txt \
+&& stt --model /mnt/d/sarah/coqui-stt-0.9.3-models.pbmm --scorer /mnt/d/sarah/coqui-stt-0.9.3-models.scorer --audio chat_party_quiet.wav >> chat_stt.txt \
+&& echo "" >> chat_stt.txt \
+&& echo chat_pop_quiet >> chat_stt.txt \
+&& echo "" >> chat_stt.txt \
+&& stt --model /mnt/d/sarah/coqui-stt-0.9.3-models.pbmm --scorer /mnt/d/sarah/coqui-stt-0.9.3-models.scorer --audio chat_pop_quiet.wav >> chat_stt.txt \
+&& echo "" >> chat_stt.txt \
+&& echo chat_fan_4_party_quiet_pop_quiet >> chat_stt.txt \
+&& echo "" >> chat_stt.txt \
+&& stt --model /mnt/d/sarah/coqui-stt-0.9.3-models.pbmm --scorer /mnt/d/sarah/coqui-stt-0.9.3-models.scorer --audio chat_fan_4_party_quiet_pop_quiet.wav >> chat_stt.txt \
+&& echo "" >> chat_stt.txt
+
+
+ffmpeg -i chat_full_enhanced.wav chat_full.wav \
+&& ffmpeg -i chat_fan_2_enhanced.wav chat_fan_2.wav \
+&& ffmpeg -i chat_fan_4_enhanced.wav chat_fan_4.wav \
+&& ffmpeg -i chat_party_quiet_enhanced.wav chat_party_quiet.wav \
+&& ffmpeg -i chat_pop_quiet_enhanced.wav chat_pop_quiet.wav \
+&& ffmpeg -i chat_fan_4_party_quiet_pop_quiet_enhanced.wav chat_fan_4_party_quiet_pop_quiet.wav
+
+echo chat_full_enhanced >> chat_stt.txt \
+&& echo "" >> chat_stt.txt \
+&& stt --model /mnt/d/sarah/coqui-stt-0.9.3-models.pbmm --scorer /mnt/d/sarah/coqui-stt-0.9.3-models.scorer --audio chat_full_enhanced.wav >> chat_stt.txt \
+&& echo "" >> chat_stt.txt \
+&& echo chat_fan_2_enhanced >> chat_stt.txt \
+&& echo "" >> chat_stt.txt \
+&& stt --model /mnt/d/sarah/coqui-stt-0.9.3-models.pbmm --scorer /mnt/d/sarah/coqui-stt-0.9.3-models.scorer --audio chat_fan_2_enhanced.wav >> chat_stt.txt \
+&& echo "" >> chat_stt.txt \
+&& echo chat_fan_4_enhanced >> chat_stt.txt \
+&& echo "" >> chat_stt.txt \
+&& stt --model /mnt/d/sarah/coqui-stt-0.9.3-models.pbmm --scorer /mnt/d/sarah/coqui-stt-0.9.3-models.scorer --audio chat_fan_4_enhanced.wav >> chat_stt.txt \
+&& echo "" >> chat_stt.txt \
+&& echo chat_party_quiet_enhanced >> chat_stt.txt \
+&& echo "" >> chat_stt.txt \
+&& stt --model /mnt/d/sarah/coqui-stt-0.9.3-models.pbmm --scorer /mnt/d/sarah/coqui-stt-0.9.3-models.scorer --audio chat_party_quiet_enhanced.wav >> chat_stt.txt \
+&& echo "" >> chat_stt.txt \
+&& echo chat_pop_quiet_enhanced >> chat_stt.txt \
+&& echo "" >> chat_stt.txt \
+&& stt --model /mnt/d/sarah/coqui-stt-0.9.3-models.pbmm --scorer /mnt/d/sarah/coqui-stt-0.9.3-models.scorer --audio chat_pop_quiet_enhanced.wav >> chat_stt.txt \
+&& echo "" >> chat_stt.txt \
+&& echo chat_fan_4_party_quiet_pop_quiet_enhanced >> chat_stt.txt \
+&& echo "" >> chat_stt.txt \
+&& stt --model /mnt/d/sarah/coqui-stt-0.9.3-models.pbmm --scorer /mnt/d/sarah/coqui-stt-0.9.3-models.scorer --audio chat_fan_4_party_quiet_pop_quiet_enhanced.wav >> chat_stt.txt \
+&& echo "" >> chat_stt.txt
