@@ -1,0 +1,48 @@
+# Teaching Men
+
+	T1	2	3	avg
+normal	89.28	91.68	89.22	90.06
+low	89.54	86.27	87.2	87.67
+
++--------+-------+-------+-------+-------+
+|        |  T1   |   2   |   3   |  avg  |
++--------+-------+-------+-------+-------+
+| normal | 89.28 | 91.68 | 89.22 | 90.06 |
+| low    | 89.54 | 86.27 |  87.2 | 87.67 |
++--------+-------+-------+-------+-------+
+
+
+despite the emergence of the metrosexual and an increase in stay at home dads, tough guy stereotypes die hard. as men continue to fall behind women in college, while outpacing them four to one in the suicide rate, some colleges are waking up to the fact that men may need to be taught to think beyond their own stereotypes. in many ways, the young men who take my seminar mirror national trends; based on their grades and writing assignments, it’s clear that they spend less time on homework than female students do, and while every bit as intelligent, they earn lower grades with studied indifference. when i asked one of my male students why he didnt openly fret about grades the way so many women do, he said, nothings worse for a guy than looking like a try hard
+
+
+## Original
+
+despite the emergence of the metrosexual and an increase in stay at home dads tough guy stereotypes die hard as men continue to fall behind women in college while outpacing them four to one in the suicide rate some colleges are waking up to the fact that men may need to be taught to think beyond their own stereotypes in many ways the young men who take my seminar mirror national trends based on their grades and writing assignments it’s clear that they spend less time on homework than female students do and while every bit as intelligent they earn lower grades with studied indifference when i asked one of my male students why he didnt openly fret about grades the way so many women do he said nothings worse for a guy than looking like a try hard
+
+## Normal Voice
+
+### T1
+
+despite the emergence of the metro sexual and increase in stay at home as type diard many continued to fall behind women in college in the fort and in the suicide rate some colleges are waking up to the fact that men may meet may need to be taught to think beyond their own stereotypes in many ways the young men who take my seminary or national trends on their graves and writing a time clear that they spent less time on homeward than female students do while every body is intelligent they earn lower grades with studied indifference as one of my meal students why he didn't openly frau grace the way so many women do said no worse for a guide then looking like a triad
+
+### T2
+
+despite the emergence of the metro sexual and an increasing state home dad stereotype die hard as many continued to fall behind women in college facing them for the one in the seaside at colleges are waking up to the fact that men may need to be taught to think beyond their own stereotypes in many ways the young men who take my seminary national trends their great and writing assignments clear that they spent less time on homework than female students do and while every bit as intelligent they are lower grades with studied indifference i asked one of my male students why he didn't openly for about great the way so many women do he said worse for a guide then looking like a triad
+
+### T3
+
+despite the emergence of the metro sexual i mean increased in stay at home dad stereotype dinard many continued to fall behind women in college pacing unordain the suicide rate as are waking up to the fact that men may need to be taught to think beyond their own stereotypes in many ways the men who take my seminar were national trends on the great and writing assignment it clear that they spent less time on homework than female students to while every bit as intelligent they are in lower grades with studied indifference i asked one of my meal students why he didn't openly fred about great the way so many women do said worse for them looking like a try hard
+
+## Low Voice
+
+### T1
+
+the emergence of the metro sexual and an increase in the at home that esther we continued to fall behind women in college by appeasing them for to one in the suicide rate some colleges are waking up to the fact that men may need to be taught to think beyond their own stereotypes in many ways the man who take my seminar mirror national trends on their grades and writing assignments it's clear that they spent less time on homework than female students to do all every bit as intelligent tegeler grades with studied indifference i asked what of my meals students why he didn't openly friend about grades the way so many women do said nothing's worse for a guide then looking like a cyard
+
+### T2
+
+the emergence of the metro sexual and an increase in states you types in hard it continued all behind women in college while of piecing them for to one in the suicide rate some colleges are waking up to the fact that men may need to be taught to think beyond their own stereotypes many was the young men who take my summoner national trends the great and writing figments it could be that they spent less time on homeward than female students do every bit as intelligent the ear lower grades which study indifference i asked one of my meal students i heddon fraud grace the way so many women do said a thing worse for i am looking like a triad
+
+### T3
+
+despite the emergence of the metro sexual and in increasing stay at home as yes die hard he continued to fall behind women in college by lot piecing them for the one and a suicide read colleges are waking up to the fact that men need to be taught that on their own stereotypes many was the young men who take my semiuncial trends on their grades and writing assignments it's clear that they spent less time on homework than female students do every bit as intelligent the earl or grades with studied indifference i asked what of my male students why he did an openly fritot great the way so many women do you said nothing worse for her guide than looking like a triad
