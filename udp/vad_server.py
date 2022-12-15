@@ -27,49 +27,77 @@ def main(ARGS):
         model.enableExternalScorer(ARGS.scorer)
 
     print("Listening (ctrl-C to exit)...")
-    frames = queue.Queue()
+    audio_frames = queue.Queue()
+    trncpt_frames = queue.Queue()
+    END_FRAME = None
 
     # Stream from microphone to STT using VAD
     spinner = None
     if not ARGS.nospinner:
         spinner = Halo(spinner='line')
     stream_context = model.createStream()
-    wav_data = bytearray()
-    has_data = False
 
-    def udpStream():
+    def audioRecvStream():
 
-        udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        udp.bind(("127.0.0.1", 12345))
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        sock.bind(("127.0.0.1", 12345))
+        has_data = False
 
         while True:
-            soundData, _ = udp.recvfrom(ARGS.rate)
-            frames.put(soundData)
+            try:
+                sock.settimeout(1)
+                soundData, _ = sock.recvfrom(ARGS.rate)
+                has_data = True
+                audio_frames.put(soundData)
+            except:
+                # did not receive data for 1 second... 
+                if has_data:
+                    has_data = False
+                    audio_frames.put(END_FRAME)
+
+        sock.close()
+            
+    def trncptSendStream():
+        BUFF_SIZE = 65536
+
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        sock.setsockopt(socket.SOL_SOCKET,socket.SO_RCVBUF,BUFF_SIZE)
+        sock.bind(("127.0.0.1", 12346))
+
+        _, client_addr = sock.recvfrom(BUFF_SIZE)
+
+        while True:
+            sock.sendto(trncpt_frames.get().encode(), client_addr)
+
+        sock.close()
     
-    Ts = threading.Thread(target = udpStream)
-    Ts.setDaemon(True)
-    Ts.start()
-    
+    audio_thread = threading.Thread(target = audioRecvStream)
+    trncpt_thread = threading.Thread(target = trncptSendStream)
+    audio_thread.setDaemon(True)
+    trncpt_thread.setDaemon(True)
+    audio_thread.start()
+    trncpt_thread.start()
+
     while True:
-        try:
-            # still have frames to add
-            logging.debug("streaming frame")
-            frame = frames.get(timeout=3)
-            if spinner: spinner.start()
-            has_data = True
-            stream_context.feedAudioContent(np.frombuffer(frame, np.int16))
-        except queue.Empty:
-            # no more frames, possible pause (...or network lag)
+        # still have frames to add
+        logging.debug("streaming frame")
+        frame = audio_frames.get()
+
+        if frame is END_FRAME:
+
             if spinner: spinner.stop()
             logging.debug("end utterence")
-            if has_data:
-                has_data = False
-                text = stream_context.finishStream()
-                print("Recognized: %s" % text)
-                if ARGS.keyboard:
-                    from pyautogui import typewrite
-                    typewrite(text)
-                stream_context = model.createStream()
+
+            text = stream_context.finishStream()
+            print("Recognized: %s" % text)
+            trncpt_frames.put(text)
+            if ARGS.keyboard:
+                from pyautogui import typewrite
+                typewrite(text)
+            stream_context = model.createStream()
+        else:
+            if spinner: spinner.start()
+            stream_context.feedAudioContent(np.frombuffer(frame, np.int16))
 
 if __name__ == '__main__':
     DEFAULT_SAMPLE_RATE = 16000

@@ -152,6 +152,8 @@ class VADAudio(Audio):
                     yield None
                     ring_buffer.clear()
 
+lock = threading.Lock()
+
 def main(ARGS):
     
     # Start audio with VAD
@@ -161,32 +163,51 @@ def main(ARGS):
                          file=ARGS.file)
     print("Listening (ctrl-C to exit)...")
     frames = vad_audio.vad_collector()
-    network_frames = queue.Queue()
+    audio_frames = queue.Queue()
 
     # Stream from microphone to STT using VAD
     spinner = None
     if not ARGS.nospinner:
         spinner = Halo(spinner='line')
     # stream_context = model.createStream()
-    wav_data = bytearray()
+    wav_data = bytearray() 
     
-    def udpStream():
-        udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)    
+    def trncptRecvStream():
+        BUFF_SIZE = 65536
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)    
+        sock.setsockopt(socket.SOL_SOCKET,socket.SO_RCVBUF,BUFF_SIZE)
+
+        sock.sendto("DUMMY".encode(), ("127.0.0.1", 12346))
 
         while True:
-            udp.sendto(network_frames.get(), ("127.0.0.1", 12345))
+            trncpt_data, _ = sock.recvfrom(BUFF_SIZE)
+            with lock:
+                print("Got ASR response: %s" % str(trncpt_data.decode()))
 
-        udp.close()
+
+        sock.close()
+
         
-    Ts = threading.Thread(target = udpStream)
-    Ts.setDaemon(True)
-    Ts.start()
+    def audioSendStream():
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)    
+
+        while True:
+            sock.sendto(audio_frames.get(), ("127.0.0.1", 12345))
+
+        sock.close()
+        
+    trncpt_thread = threading.Thread(target = trncptRecvStream)
+    audio_thread = threading.Thread(target = audioSendStream)
+    trncpt_thread.setDaemon(True)
+    audio_thread.setDaemon(True)
+    trncpt_thread.start()
+    audio_thread.start()
 
     for frame in frames:
         if frame is not None:
             if spinner: spinner.start()
             logging.debug("streaming frame")
-            network_frames.put(frame)
+            audio_frames.put(frame)
             # stream_context.feedAudioContent(np.frombuffer(frame, np.int16))
             if ARGS.savewav: wav_data.extend(frame)
         else:
