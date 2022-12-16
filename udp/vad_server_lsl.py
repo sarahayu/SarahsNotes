@@ -17,7 +17,7 @@ FORMAT = pyaudio.paInt16
 # Network/VAD rate-space
 RATE_PROCESS = 16000
 CHANNELS = 1
-BUFFER_LEN = 10
+BUFFER_LEN = 10     # 10ms is IDEAL
 BLOCKS_PER_SECOND = 1000 / BUFFER_LEN
 
 class SynetheticAudio(object):
