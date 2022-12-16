@@ -8,6 +8,8 @@ import numpy as np
 def main():
     # first resolve an EEG stream on the lab network
     print("looking for an EEG stream...")
+
+    # type is case-sensitive
     streams = resolve_stream('type', 'Audio')
 
     # create a new inlet to read from the stream
@@ -20,7 +22,7 @@ def main():
     # BLOCKS_PER_SECOND
     # FRAMES_PER_BUFFER = BUFFER_LEN * RATE / 1000 = RATE / BLOCKS_PER_SECOND
 
-    BUFFER_LEN = 5
+    BUFFER_LEN = 10
     CHUNK = BUFFER_LEN*1024
     stream = p.open(format=p.get_format_from_width(2),
                     channels=1,

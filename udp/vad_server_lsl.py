@@ -164,21 +164,19 @@ def main(ARGS):
         streams = resolve_stream('type', 'Audio')
 
         # create a new inlet to read from the stream
-        inlet = StreamInlet(streams[0], processing_flags=proc_threadsafe)
+        inlet = StreamInlet(streams[0])
 
         # we need to make sure each frame chunk is the same size
         frames_per_buffer = int(ARGS.rate / BLOCKS_PER_SECOND)
         accum_frames = []
 
         while True:
-            # get a new sample (you can also omit the timestamp part if you're not
-            # interested in it)
             chunk, _ = inlet.pull_chunk()
 
             accum_frames.extend(chunk)
 
             if len(accum_frames) > frames_per_buffer:
-                audio_frames.put(np.array(accum_frames[:frames_per_buffer]).astype(np.int16).tostring())
+                audio_frames.put(np.array(accum_frames[:frames_per_buffer]).astype(np.int16).tobytes())
                 accum_frames = accum_frames[frames_per_buffer:]
 
             
