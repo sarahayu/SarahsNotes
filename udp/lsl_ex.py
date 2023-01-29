@@ -28,7 +28,7 @@ def main():
                     channels=1,
                     rate=44100,
                     output=True,
-                    frames_per_buffer=CHUNK)
+                    frames_per_buffer=int(BUFFER_LEN * 44100 / 1000))
 
     # BUFFER_LEN = CHUNK / 1024 = RATE / (50 * 1024) = RATE / (BLOCKS_PER_SECOND * 1024)
     while True:

@@ -66,7 +66,7 @@ def main(ARGS):
         audio_frames.put(stream.read(CHUNK))
 
 if __name__ == '__main__':
-    DEFAULT_SAMPLE_RATE = 16000
+    DEFAULT_SAMPLE_RATE = 48000
 
     import argparse
     parser = argparse.ArgumentParser(description="Stream from microphone to STT using VAD")
